@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Rise Nurse Collective – Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#1c6dd0; /* calming blue */
+      --brand-ink:#0e3a7c;
+      --ink:#1a1a1a;
+      --muted:#6b7280;
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --accent:#3ecf8e; /* success green */
+      --warn:#f59e0b; /* amber */
+      --danger:#ef4444; /* red */
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    a{text-decoration:none;color:inherit}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;border:1px solid transparent;font-weight:600;cursor:pointer;transition:.2s}
+    .btn-primary{background:var(--brand);color:#fff}
+    .btn-primary:hover{filter:brightness(.95)}
+    .btn-ghost{border-color:#cfd8ea;color:var(--brand-ink);background:#fff}
+    .btn-ghost:hover{background:#eef3ff}
+    .chip{display:inline-flex;padding:.25rem .6rem;border-radius:999px;background:#ecf3ff;color:var(--brand-ink);font-weight:600;font-size:.8rem}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:var(--shadow)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#69a4ff);display:grid;place-items:center;color:#fff;font-weight:800}
+    .nav-links{display:flex;align-items:center;gap:22px}
+    .nav-links a{color:#334155;font-weight:600}
+
+    /* Top-left Nurse Sign In (as requested) */
+    .top-left-login{position:fixed;left:18px;top:18px;z-index:60}
+
+    .hero{position:relative;isolation:isolate}
+    .hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:64px 0 28px}
+    .hero .art{position:relative;background:radial-gradient(#dfeeff,transparent 60%);border-radius:24px;min-height:280px}
+    .hero h1{font-size:42px;line-height:1.1;margin:0 0 12px}
+    .hero p{font-size:1.1rem;color:var(--muted);margin:0 0 20px}
+    .hero img{width:100%;height:100%;object-fit:cover;border-radius:20px;box-shadow:var(--shadow)}
+
+    .section{padding:56px 0}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .card h3{margin:.25rem 0 .35rem}
+    .card p{margin:0;color:var(--muted)}
+
+    .contact form{display:grid;gap:12px}
+    .field{display:grid;gap:6px}
+    .field input,.field textarea{padding:12px 14px;border:1px solid #d8e0ef;border-radius:12px;background:#fff;font:inherit}
+    .field textarea{min-height:120px;resize:vertical}
+    .disclaimer{font-size:.9rem;color:#64748b;margin-top:8px}
+
+    footer{padding:28px 0;color:#64748b}
+
+    /* PAGES (hash-based router) */
+    .page{display:none}
+    .page.active{display:block}
+
+    /* LOGIN PAGE */
+    .centered{min-height:calc(100vh - 80px);display:grid;place-items:center;padding:20px}
+    .login-card{width:min(560px,92vw);background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:28px}
+    .login-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .login-card h2{margin:.2rem 0}
+    .login-card p{margin:.2rem 0;color:var(--muted)}
+
+    /* PORTAL */
+    .portal{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 70px)}
+    .portal aside{background:#0f1b3a;color:#dbe7ff;padding:18px;display:flex;flex-direction:column;gap:12px}
+    .portal .aside-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .portal .badge{background:#13306b;color:#cfe0ff;border-radius:999px;padding:.2rem .5rem;font-size:.75rem}
+    .portal nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:#dbe7ff}
+    .portal nav a:hover,.portal nav a.active{background:#1a2e63}
+    .portal main{padding:22px}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+    .kpi{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:18px}
+    .kpi .label{color:#64748b;font-size:.9rem}
+    .panel{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:18px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    /* Demo ribbon */
+    .demo{position:fixed;right:-50px;top:22px;transform:rotate(35deg);background:linear-gradient(135deg,#ffdda9,#ffd178);color:#6b4e00;font-weight:800;padding:8px 80px;z-index:70;box-shadow:var(--shadow)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .portal{grid-template-columns:1fr}
+      .portal aside{position:sticky;top:70px;z-index:10;border-bottom:1px solid #233769}
+      .two-col{grid-template-columns:1fr}
+      .kpis{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-left Nurse Sign In (requested) -->
+  <a class="top-left-login btn btn-ghost" href="#login" title="Nurse Sign In">🩺 Nurse Sign In</a>
+  <div class="demo">DEMO • MOCKUP</div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">RN</div>
+        <div>
+          <div style="font-weight:800;line-height:1">Rise Nurse Collective</div>
+          <div style="font-size:.8rem;color:#64748b">DDA Nurse Delegation • Maryland</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#home-about">About</a>
+        <a href="#home-services">Services</a>
+        <a href="#home-contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE: HOME -->
+  <main id="home" class="page active">
+    <section class="wrap hero">
+      <div class="hero-inner">
+        <div>
+          <span class="chip">Compassion × Compliance</span>
+          <h1>Empowering DDA Nurse Delegation for Individuals with IDD</h1>
+          <p>We connect skilled nurses with supported individuals and care teams to deliver safe, person‑centered care that meets Maryland regulations.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <a href="#home-services" class="btn btn-primary">Our Services</a>
+            <a href="#login" class="btn btn-ghost">Nurse Sign In</a>
+          </div>
+        </div>
+        <div class="art">
+          <img alt="Nurse supporting client" src="https://images.unsplash.com/photo-1580281657527-47d5aa1bb17b?q=80&w=1400&auto=format&fit=crop"/>
+        </div>
+      </div>
+    </section>
+
+    <section id="home-about" class="wrap section">
+      <div class="card" style="padding:28px">
+        <h2 style="margin:.25rem 0 10px">About</h2>
+        <p>At Rise Nurse Collective LLC, we specialize in Nurse Delegation services for individuals with intellectual and developmental disabilities. Our mission is to bridge compassionate nursing care with regulatory excellence—ensuring safe, person‑centered support for every individual.</p>
+      </div>
+    </section>
+
+    <section id="home-services" class="wrap section">
+      <h2 style="margin:0 0 14px">Services</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Delegation & Supervision</h3>
+          <p>RN assessment, care planning, task delegation, and ongoing supervision for unlicensed staff.</p>
+        </div>
+        <div class="card">
+          <h3>Training & Compliance</h3>
+          <p>Caregiver training, medication administration competencies, and documentation guidance.</p>
+        </div>
+        <div class="card">
+          <h3>Caregiver Support</h3>
+          <p>Clear instructions, checklists, and escalation paths so teams feel confident and prepared.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>Documentation Portal <span class="badge" style="background:#e8f5ee;color:#166534;padding:.2rem .5rem;border-radius:999px;font-size:.8rem">Coming Soon</span></h3>
+        <p class="muted">Secure uploads, call logs, and task tracking will live here for authorized users.</p>
+      </div>
+    </section>
+
+    <section id="home-contact" class="wrap section contact">
+      <div class="grid-3" style="grid-template-columns:1.2fr .8fr">
+        <div class="card" style="padding:28px">
+          <h2 style="margin:.25rem 0 10px">Contact</h2>
+          <form onsubmit="event.preventDefault(); alert('Thanks! This demo form doesn't send data.');">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="msg">Message</label>
+              <textarea id="msg" placeholder="How can we help?"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Send message</button>
+            <div class="disclaimer">Please do not include Protected Health Information (PHI) in this form.</div>
+          </form>
+        </div>
+        <div class="card" style="padding:28px">
+          <h3>Service Area</h3>
+          <p>Maryland • DDA Programs</p>
+          <h3 style="margin-top:14px">Email</h3>
+          <p><a href="mailto:info@risenursecollective.com" style="color:var(--brand-ink)">info@risenursecollective.com</a></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="wrap">
+      <small>© <span id="year"></span> Rise Nurse Collective LLC. All rights reserved.</small>
+    </footer>
+  </main>
+
+  <!-- PAGE: LOGIN -->
+  <main id="login" class="page">
+    <div class="centered">
+      <div class="login-card">
+        <div class="login-head">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="logo" style="width:30px;height:30px;border-radius:8px">RN</div>
+            <strong>Rise Nurse Collective</strong>
+          </div>
+          <a href="#home" class="btn btn-ghost">← Back</a>
+        </div>
+        <h2>🩺 Nurse Sign In</h2>
+        <p>Authorized nurses only. Demo login will take you to a placeholder portal.</p>
+        <form id="demoLogin" style="margin-top:12px;display:grid;gap:12px">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" placeholder="nurse@example.com" required>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" required>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <a href="#" onclick="alert('Demo only. In production this would trigger a reset flow.');return false;" style="color:#0e3a7c">Forgot password?</a>
+            <button class="btn btn-primary" type="submit">Sign in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE: PORTAL (placeholder after login) -->
+  <main id="portal" class="page">
+    <div class="portal">
+      <aside>
+        <div class="aside-head">
+          <div class="logo" style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(135deg,#69a4ff,#1c6dd0);color:#fff;font-weight:800">RN</div>
+          <div>
+            <div style="font-weight:700">Nurse Portal</div>
+            <div class="badge">Demo</div>
+          </div>
+        </div>
+        <nav>
+          <a class="active" href="#portal" onclick="portalTab('dashboard');return false;">🏠 Dashboard</a>
+          <a href="#portal" onclick="portalTab('clients');return false;">👥 Assigned Clients</a>
+          <a href="#portal" onclick="portalTab('tasks');return false;">📝 Delegation Tasks</a>
+          <a href="#portal" onclick="portalTab('calls');return false;">📞 Call Logs</a>
+          <a href="#portal" onclick="portalTab('docs');return false;">📄 Documents</a>
+          <a href="#home" onclick="demoLogout();">🚪 Log Out</a>
+        </nav>
+      </aside>
+      <main>
+        <div class="kpis">
+          <div class="kpi"><div class="label">Open Delegations</div><div style="font-size:26px;font-weight:800">8</div></div>
+          <div class="kpi"><div class="label">Due This Week</div><div style="font-size:26px;font-weight:800">3</div></div>
+          <div class="kpi"><div class="label">Unread Messages</div><div style="font-size:26px;font-weight:800">2</div></div>
+        </div>
+        <div class="two-col">
+          <div class="panel">
+            <h3 style="margin-top:0">Upcoming Delegations</h3>
+            <ul style="margin:8px 0 0 18px;line-height:1.8">
+              <li>Medication admin check – Tue 10:30 AM</li>
+              <li>Caregiver skills review – Wed 2:00 PM</li>
+              <li>Quarterly documentation audit – Fri 9:00 AM</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3 style="margin-top:0">Recent Call Logs</h3>
+            <ul style="margin:8px 0 0 18px;line-height:1.8">
+              <li>10/28 – Caregiver question about dosing; provided guidance</li>
+              <li>10/27 – Reported missed dose; initiated follow‑up protocol</li>
+              <li>10/26 – Scheduled in‑home assessment</li>
+            </ul>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h3 style="margin-top:0">Notes</h3>
+          <p>This is a design preview. Final portal will include secure auth, role‑based access, and HIPAA‑compliant storage. No real data is shown here.</p>
+        </div>
+      </main>
+    </div>
+  </main>
+
+  <script>
+    // Basic hash router
+    const pages = ["home","login","portal"];
+    function show(id){
+      pages.forEach(p=>{
+        const el=document.getElementById(p);
+        if(!el) return;
+        el.classList.toggle('active', p===id);
+      });
+      // Scroll to top on page switch
+      window.scrollTo({top:0,behavior:'instant'});
+    }
+    function route(){
+      const hash = (location.hash||"#home").replace('#','');
+      if(pages.includes(hash)) show(hash); else show('home');
+    }
+    window.addEventListener('hashchange', route);
+
+    // Demo login
+    document.getElementById('demoLogin')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      location.hash = '#portal';
+    });
+    function demoLogout(){
+      alert('You have been logged out (demo).');
+      location.hash = '#home';
+    }
+
+    // Portal tab switching (visual only)
+    function portalTab(tab){
+      // This stub can be expanded later; for now just toast
+      console.log('Open tab:', tab);
+    }
+
+    // Init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    route();
+  </script>
+</body>
+</html>
